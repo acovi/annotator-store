@@ -1,0 +1,21 @@
+2017-03-13 13:01:22 3974 annotator.elasticsearch [INFO] Creating index 'annotator'.
+2017-03-13 13:01:22 3974 elasticsearch [WARNING] PUT /annotator/_mapping/annotation [status:400 request:0.006s]
+2017-03-13 13:01:22 3974 annotator [CRITICAL] Elasticsearch index mapping is incorrect! Please reindex it. You can use reindex.py for this, e.g. python reindex.py --host http://127.0.0.1:9200 annotator annotator-2017-03-13
+Traceback (most recent call last):
+  File "/home/ubuntu/annotator-store/run.py", line 114, in <module>
+    main(sys.argv)
+  File "/home/ubuntu/annotator-store/run.py", line 67, in main
+    annotation.Annotation.create_all()
+  File "/home/ubuntu/annotator-store/annotator/elasticsearch.py", line 96, in create_all
+    body=mapping)
+  File "/usr/local/lib/python2.7/dist-packages/elasticsearch/client/utils.py", line 69, in _wrapped
+    return func(*args, params=params, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/elasticsearch/client/indices.py", line 289, in put_mapping
+    '_mapping', doc_type), params=params, body=body)
+  File "/usr/local/lib/python2.7/dist-packages/elasticsearch/transport.py", line 307, in perform_request
+    status, headers, data = connection.perform_request(method, url, params, body, ignore=ignore, timeout=timeout)
+  File "/usr/local/lib/python2.7/dist-packages/elasticsearch/connection/http_urllib3.py", line 93, in perform_request
+    self._raise_error(response.status, raw_data)
+  File "/usr/local/lib/python2.7/dist-packages/elasticsearch/connection/base.py", line 105, in _raise_error
+    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)
+elasticsearch.exceptions.RequestError: TransportError(400, u'MergeMappingException[Merge failed with failures {[mapper [ranges.endOffset] of different type, current_type [long], merged_type [integer], mapper [ranges.startOffset] of different type, current_type [long], merged_type [integer], mapper [tags] has different index_name, mapper [quote] has different index_analyzer, mapper [id] has different index values, mapper [text] has different index_analyzer]}]')
